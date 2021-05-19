@@ -14,6 +14,8 @@ import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Item;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,6 +27,7 @@ import java.util.Random;
 public class ArenaLoader {
 
     private final Random random = new Random();
+    private final BlockVector3 location = BlockVector3.at(-14, 68, 1686);
 
     public void loadRandomArena() {
         final var arenas = new ArrayList<>(Arrays.asList(Arena.values()));
@@ -50,11 +53,30 @@ public class ArenaLoader {
         try (EditSession editSession = WorldEdit.getInstance().newEditSession(new BukkitWorld(Bukkit.getWorld("world")))) {
             Operation operation = new ClipboardHolder(clipboard)
                     .createPaste(editSession)
-                    .to(BlockVector3.at(-14, 68, 1686))
+                    .to(location)
                     .build();
             Operations.complete(operation);
         } catch (WorldEditException e) {
             e.printStackTrace();
         }
+
+        clearArena(); //clear shit off the ground
+    }
+
+    /**
+     * Clear all the stuff off of the arena floor after the map changes
+     */
+    public void clearArena() {
+        final var world = Bukkit.getWorld("world");
+        if (world == null) return;
+        final var centerBlock = world.getBlockAt(location.getX(), location.getY(), location.getZ());
+        centerBlock.getLocation().getNearbyEntities(14, 9, 14)
+                .stream().filter(entity -> entity.getType().equals(EntityType.DROPPED_ITEM))
+                .forEach(entity -> {
+                    if (entity instanceof Item) {
+                        entity.remove();
+                    }
+                });
+
     }
 }

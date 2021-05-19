@@ -5,6 +5,7 @@ public enum Arena {
     ARENA_EMPTY,
     ARENA_BEACHY,
     ARENA_BRIDGE,
-    ARENA_NUKETOWN
+    ARENA_NUKETOWN,
+    ARENA_GULAG
 
 }
