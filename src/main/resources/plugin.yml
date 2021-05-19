@@ -1,0 +1,20 @@
+name: StratumGladiators
+version: ${project.version}
+main: moe.quilldev.stratumgladiators.StratumGladiators
+api-version: 1.16
+
+
+commands:
+  challenge:
+    description: Challenges the given player to a duel.
+    usage: /<command> <target>
+    permission: stratumgladiators.challenge.send
+  challengeaccept:
+    description: Accepts the given players duel.
+    usage: /<command> <target>
+    permission: stratumgladiators.challenge.accept
+  changearena:
+    description: Changes the arena to the given one
+    usage: /<command> <arena>
+  bet:
+    usage: /<command> <amount>
