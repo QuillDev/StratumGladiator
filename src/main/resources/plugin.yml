@@ -18,3 +18,5 @@ commands:
     usage: /<command> <arena>
   bet:
     usage: /<command> <amount>
+  spawnlaunchpad:
+    usage: /<command>

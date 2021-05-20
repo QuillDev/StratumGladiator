@@ -8,8 +8,12 @@ import moe.quilldev.stratumgladiators.Commands.ChallengeCommands.Challenge;
 import moe.quilldev.stratumgladiators.Commands.ChallengeCommands.ChallengeAcceptCommand;
 import moe.quilldev.stratumgladiators.Commands.ChallengeCommands.ChallengeCommand;
 import moe.quilldev.stratumgladiators.Commands.ChallengeCommands.ChallengeManger;
+import moe.quilldev.stratumgladiators.Commands.SpawnLaunchpad;
+import moe.quilldev.stratumgladiators.Events.LaunchpadEvent;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import javax.security.auth.callback.LanguageCallback;
 
 public final class StratumGladiators extends JavaPlugin {
 
@@ -26,9 +30,11 @@ public final class StratumGladiators extends JavaPlugin {
         final var pluginManager = getServer().getPluginManager();
 
         pluginManager.registerEvents(challengeManager, this);
+        pluginManager.registerEvents(new LaunchpadEvent(this), this);
         getCommand("challenge").setExecutor(new ChallengeCommand(challengeManager));
         getCommand("challengeaccept").setExecutor(new ChallengeAcceptCommand(challengeManager));
         getCommand("bet").setExecutor(new BetCommand(betManager));
+        getCommand("spawnlaunchpad").setExecutor(new SpawnLaunchpad(this));
 
         final var changeArenaCommand = getCommand("changearena");
         if (changeArenaCommand != null) {
